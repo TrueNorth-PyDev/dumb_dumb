@@ -155,11 +155,12 @@
   .waitlist p{ color:var(--ink-dim); margin-bottom:32px; }
   form{ display:flex; flex-direction:column; gap:12px; max-width:440px; margin:0 auto; text-align:left; }
   label{ font-size:12px; color:var(--ink-dim); font-family:'JetBrains Mono'; text-transform:uppercase; letter-spacing:.06em; }
-  input, select{
+  input, select, textarea{
     width:100%; background:var(--bg); border:1px solid var(--line); color:var(--ink);
     padding:12px 14px; border-radius:8px; font-size:14.5px; font-family:'Inter'; margin-top:6px;
+    resize: vertical;
   }
-  input:focus, select:focus{ outline:2px solid var(--amber); outline-offset:1px; border-color:var(--amber); }
+  input:focus, select:focus, textarea:focus{ outline:2px solid var(--amber); outline-offset:1px; border-color:var(--amber); }
   button.submit{
     margin-top:10px; background:var(--amber); color:#161005; border:none;
     padding:14px; border-radius:8px; font-weight:600; font-size:15px; cursor:pointer;
@@ -280,6 +281,37 @@
         <option>Nothing formal</option>
       </select>
     </div>
+    <div>
+      <label for="order_volume">Roughly how many orders do you handle in a normal week?</label>
+      <select id="order_volume">
+        <option>1-10</option>
+        <option>11-50</option>
+        <option>51-100</option>
+        <option>100+</option>
+      </select>
+    </div>
+    <div>
+      <label for="sales_channels">Do you sell on WhatsApp only, or other platforms?</label>
+      <select id="sales_channels">
+        <option>Only WhatsApp</option>
+        <option>WhatsApp + Instagram</option>
+        <option>Website / App</option>
+        <option>Physical Store</option>
+      </select>
+    </div>
+    <div>
+      <label for="delivery_method">How do you currently arrange delivery?</label>
+      <select id="delivery_method">
+        <option>Personal riders</option>
+        <option>Dispatch companies</option>
+        <option>Both</option>
+        <option>Customer pickup</option>
+      </select>
+    </div>
+    <div>
+      <label for="ideal_software">Describe the ideal software that would tackle your most pressing issues.</label>
+      <textarea id="ideal_software" rows="4"></textarea>
+    </div>
     <button type="submit" class="submit">Join the waitlist</button>
     <div class="confirm" id="confirmMsg">You're on the list. We'll reach out before beta opens in January.</div>
   </form>
@@ -314,7 +346,11 @@
         name: document.getElementById('name').value,
         business: document.getElementById('business').value,
         whatsapp: document.getElementById('whatsapp').value,
-        platform: document.getElementById('platform').value
+        platform: document.getElementById('platform').value,
+        order_volume: document.getElementById('order_volume').value,
+        sales_channels: document.getElementById('sales_channels').value,
+        delivery_method: document.getElementById('delivery_method').value,
+        ideal_software: document.getElementById('ideal_software').value
     };
     
     fetch('', { 

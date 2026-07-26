@@ -13,7 +13,11 @@ def index(request):
                 name=data.get('name'),
                 business_name=data.get('business'),
                 contact=data.get('whatsapp'),
-                platform=data.get('platform')
+                platform=data.get('platform'),
+                order_volume=data.get('order_volume'),
+                sales_channels=data.get('sales_channels'),
+                delivery_method=data.get('delivery_method'),
+                ideal_software=data.get('ideal_software')
             )
             return JsonResponse({'status': 'success'})
         except Exception as e:

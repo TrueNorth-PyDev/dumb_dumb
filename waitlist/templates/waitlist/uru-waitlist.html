@@ -353,7 +353,7 @@
         ideal_software: document.getElementById('ideal_software').value
     };
     
-    fetch('', { 
+    fetch(window.location.href, { 
         method: 'POST', 
         headers: {
             'Content-Type': 'application/json',

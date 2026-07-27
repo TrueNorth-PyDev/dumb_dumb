@@ -153,14 +153,26 @@
   }
   .waitlist h2{ font-size:28px; margin-bottom:10px; }
   .waitlist p{ color:var(--ink-dim); margin-bottom:32px; }
-  form{ display:flex; flex-direction:column; gap:12px; max-width:440px; margin:0 auto; text-align:left; }
-  label{ font-size:12px; color:var(--ink-dim); font-family:'JetBrains Mono'; text-transform:uppercase; letter-spacing:.06em; }
-  input, select, textarea{
+  form{ display:flex; flex-direction:column; gap:24px; max-width:540px; margin:0 auto; text-align:left; }
+  .form-group { display:flex; flex-direction:column; gap:8px; }
+  label{ font-size:12.5px; color:var(--ink); font-family:'Inter'; font-weight:600; }
+  .help-text { font-size:12px; color:var(--ink-dim); font-family:'JetBrains Mono'; margin-top:-4px; }
+  input[type="text"], textarea{
     width:100%; background:var(--bg); border:1px solid var(--line); color:var(--ink);
-    padding:12px 14px; border-radius:8px; font-size:14.5px; font-family:'Inter'; margin-top:6px;
+    padding:12px 14px; border-radius:8px; font-size:14.5px; font-family:'Inter';
     resize: vertical;
   }
-  input:focus, select:focus, textarea:focus{ outline:2px solid var(--amber); outline-offset:1px; border-color:var(--amber); }
+  input[type="text"]:focus, textarea:focus{ outline:2px solid var(--amber); outline-offset:1px; border-color:var(--amber); }
+  .radio-group, .check-group { display:flex; flex-direction:column; gap:6px; }
+  .radio-label, .check-label {
+    display:flex; align-items:flex-start; gap:10px; cursor:pointer;
+    font-size:14.5px; font-weight:400; color:var(--ink);
+    padding:10px 14px; border:1px solid var(--line); border-radius:8px;
+    transition:background .2s, border-color .2s;
+  }
+  .radio-label:hover, .check-label:hover { background:var(--bg); border-color:var(--ink-dim); }
+  .radio-label input, .check-label input { margin-top:4px; accent-color:var(--amber); }
+  .conditional { display:none; margin-top:8px; }
   button.submit{
     margin-top:10px; background:var(--amber); color:#161005; border:none;
     padding:14px; border-radius:8px; font-weight:600; font-size:15px; cursor:pointer;
@@ -260,58 +272,147 @@
   <h2>Be first to run your business on Uru</h2>
   <p>We're onboarding a small group of vendors before public launch. Tell us a bit about how you sell.</p>
   <form id="waitlistForm">
-    <div>
+    <!-- BASIC INFO -->
+    <div class="form-group">
       <label for="name">Your name</label>
       <input type="text" id="name" required>
     </div>
-    <div>
+    <div class="form-group">
       <label for="business">Business name</label>
       <input type="text" id="business" required>
     </div>
-    <div>
+    <div class="form-group">
       <label for="whatsapp">WhatsApp number or email</label>
       <input type="text" id="whatsapp" required>
     </div>
-    <div>
-      <label for="platform">What do you currently use to manage orders?</label>
-      <select id="platform">
-        <option>Just WhatsApp</option>
-        <option>WhatsApp + a notebook / Excel</option>
-        <option>Another app (Bumpa, Selar, Dukka, etc.)</option>
-        <option>Nothing formal</option>
-      </select>
+    <div class="form-group">
+      <label for="product_category">What do you sell?</label>
+      <input type="text" id="product_category" required>
     </div>
-    <div>
-      <label for="order_volume">Roughly how many orders do you handle in a normal week?</label>
-      <select id="order_volume">
-        <option>1-10</option>
-        <option>11-50</option>
-        <option>51-100</option>
-        <option>100+</option>
-      </select>
+    <div class="form-group">
+      <label>How long have you been running this business?</label>
+      <div class="radio-group">
+        <label class="radio-label"><input type="radio" name="business_duration" value="Less than 6 months" required> Less than 6 months</label>
+        <label class="radio-label"><input type="radio" name="business_duration" value="6 months - 2 years"> 6 months – 2 years</label>
+        <label class="radio-label"><input type="radio" name="business_duration" value="2-5 years"> 2–5 years</label>
+        <label class="radio-label"><input type="radio" name="business_duration" value="More than 5 years"> More than 5 years</label>
+      </div>
     </div>
-    <div>
-      <label for="sales_channels">Do you sell on WhatsApp only, or other platforms?</label>
-      <select id="sales_channels">
-        <option>Only WhatsApp</option>
-        <option>WhatsApp + Instagram</option>
-        <option>Website / App</option>
-        <option>Physical Store</option>
-      </select>
+    
+    <!-- VOLUME AND CHANNELS -->
+    <div class="form-group">
+      <label>Approximately how many orders do you receive in a normal week?</label>
+      <div class="radio-group">
+        <label class="radio-label"><input type="radio" name="order_volume" value="1-10" required> 1–10</label>
+        <label class="radio-label"><input type="radio" name="order_volume" value="11-30"> 11–30</label>
+        <label class="radio-label"><input type="radio" name="order_volume" value="31-100"> 31–100</label>
+        <label class="radio-label"><input type="radio" name="order_volume" value="100+"> 100+</label>
+      </div>
     </div>
-    <div>
-      <label for="delivery_method">How do you currently arrange delivery?</label>
-      <select id="delivery_method">
-        <option>Personal riders</option>
-        <option>Dispatch companies</option>
-        <option>Both</option>
-        <option>Customer pickup</option>
-      </select>
+    <div class="form-group">
+      <label>Where do most of your customers place orders?</label>
+      <div class="help-text">Select all that apply.</div>
+      <div class="check-group">
+        <label class="check-label"><input type="checkbox" name="sales_channels" value="WhatsApp"> WhatsApp</label>
+        <label class="check-label"><input type="checkbox" name="sales_channels" value="Instagram"> Instagram</label>
+        <label class="check-label"><input type="checkbox" name="sales_channels" value="Facebook"> Facebook</label>
+        <label class="check-label"><input type="checkbox" name="sales_channels" value="TikTok"> TikTok</label>
+        <label class="check-label"><input type="checkbox" name="sales_channels" value="Website"> Website</label>
+        <label class="check-label"><input type="checkbox" name="sales_channels" value="Physical shop"> Physical shop</label>
+        <label class="check-label"><input type="checkbox" name="sales_channels" value="Other"> Other</label>
+      </div>
     </div>
-    <div>
-      <label for="ideal_software">Describe the ideal software that would tackle your most pressing issues.</label>
-      <textarea id="ideal_software" rows="4"></textarea>
+
+    <!-- OPERATIONS -->
+    <div class="form-group">
+      <label>What do you currently use to keep track of orders?</label>
+      <div class="radio-group">
+        <label class="radio-label"><input type="radio" name="current_tools" value="Only WhatsApp" required> Only WhatsApp</label>
+        <label class="radio-label"><input type="radio" name="current_tools" value="Notebook"> Notebook</label>
+        <label class="radio-label"><input type="radio" name="current_tools" value="Excel/Google Sheets"> Excel/Google Sheets</label>
+        <label class="radio-label"><input type="radio" name="current_tools" value="POS software"> POS software</label>
+        <label class="radio-label"><input type="radio" name="current_tools" value="Another app"> Another app</label>
+        <label class="radio-label"><input type="radio" name="current_tools" value="I don't keep records"> I don't keep records</label>
+      </div>
     </div>
+
+    <div class="form-group">
+      <label>Which parts of your business take the most time every day?</label>
+      <div class="help-text">Select up to 3.</div>
+      <div class="check-group limit-3" data-name="time_drains">
+        <label class="check-label"><input type="checkbox" name="time_drains" value="Replying to customer messages"> Replying to customer messages</label>
+        <label class="check-label"><input type="checkbox" name="time_drains" value="Confirming payments"> Confirming payments</label>
+        <label class="check-label"><input type="checkbox" name="time_drains" value="Tracking orders"> Tracking orders</label>
+        <label class="check-label"><input type="checkbox" name="time_drains" value="Updating stock"> Updating stock</label>
+        <label class="check-label"><input type="checkbox" name="time_drains" value="Arranging deliveries"> Arranging deliveries</label>
+        <label class="check-label"><input type="checkbox" name="time_drains" value="Following up with customers"> Following up with customers</label>
+        <label class="check-label"><input type="checkbox" name="time_drains" value="Finding old conversations"> Finding old conversations</label>
+        <label class="check-label"><input type="checkbox" name="time_drains" value="Sending invoices"> Sending invoices</label>
+        <label class="check-label"><input type="checkbox" name="time_drains" value="Calculating sales"> Calculating sales</label>
+        <label class="check-label"><input type="checkbox" name="time_drains" value="Something else"> Something else</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Which of these causes the most frustration?</label>
+      <div class="help-text">Choose up to 3.</div>
+      <div class="check-group limit-3" data-name="frustrations">
+        <label class="check-label"><input type="checkbox" name="frustrations" value="Customers asking for order updates"> Customers asking for order updates</label>
+        <label class="check-label"><input type="checkbox" name="frustrations" value="Forgetting who has paid"> Forgetting who has paid</label>
+        <label class="check-label"><input type="checkbox" name="frustrations" value="Losing track of orders"> Losing track of orders</label>
+        <label class="check-label"><input type="checkbox" name="frustrations" value="Running out of stock unexpectedly"> Running out of stock unexpectedly</label>
+        <label class="check-label"><input type="checkbox" name="frustrations" value="Finding previous customer information"> Finding previous customer information</label>
+        <label class="check-label"><input type="checkbox" name="frustrations" value="Chasing delivery riders"> Chasing delivery riders</label>
+        <label class="check-label"><input type="checkbox" name="frustrations" value="Customers disappearing after making enquiries"> Customers disappearing after making enquiries</label>
+        <label class="check-label"><input type="checkbox" name="frustrations" value="Repeat customers not coming back"> Repeat customers not coming back</label>
+        <label class="check-label"><input type="checkbox" name="frustrations" value="Keeping records manually"> Keeping records manually</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Have you ever lost money because of your current process?</label>
+      <div class="radio-group">
+        <label class="radio-label"><input type="radio" name="lost_money" value="Yes" required onchange="document.getElementById('lostMoneyDetails').style.display='block'"> Yes</label>
+        <label class="radio-label"><input type="radio" name="lost_money" value="No" onchange="document.getElementById('lostMoneyDetails').style.display='none'"> No</label>
+      </div>
+      <div class="conditional" id="lostMoneyDetails">
+        <label for="lost_money_details">If yes, what happened?</label>
+        <textarea id="lost_money_details" rows="3"></textarea>
+      </div>
+    </div>
+
+    <!-- VALUE UNCOVERING -->
+    <div class="form-group">
+      <label for="desired_automation">If one part of your business could become automatic tomorrow, what would you choose?</label>
+      <div class="help-text">Examples: Order tracking, Inventory, Delivery updates, Customer follow-ups, Payment confirmation</div>
+      <input type="text" id="desired_automation" required>
+    </div>
+
+    <div class="form-group">
+      <label for="worst_task">When you finish work each day, what task do you wish you never had to do again?</label>
+      <textarea id="worst_task" rows="3" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="two_hours_saved">If software could save you 2 hours every day, what would you spend that time doing instead?</label>
+      <textarea id="two_hours_saved" rows="3" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>How interested would you be in trying software that reduces your daily manual work by at least 40%?</label>
+      <div class="radio-group">
+        <label class="radio-label"><input type="radio" name="interest_level" value="Very interested" required> Very interested</label>
+        <label class="radio-label"><input type="radio" name="interest_level" value="Interested"> Interested</label>
+        <label class="radio-label"><input type="radio" name="interest_level" value="Maybe"> Maybe</label>
+        <label class="radio-label"><input type="radio" name="interest_level" value="Not right now"> Not right now</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="biggest_slowdown">What's the biggest thing slowing your business down today?</label>
+      <textarea id="biggest_slowdown" rows="4" required></textarea>
+    </div>
+
     <button type="submit" class="submit">Join the waitlist</button>
     <div class="confirm" id="confirmMsg">You're on the list. We'll reach out before beta opens in January.</div>
   </form>
@@ -339,18 +440,46 @@
   }
   const csrftoken = getCookie('csrftoken');
 
+  // Enforce max 3 selections for time_drains and frustrations
+  document.querySelectorAll('.limit-3').forEach(group => {
+      const inputs = group.querySelectorAll('input[type="checkbox"]');
+      inputs.forEach(input => {
+          input.addEventListener('change', () => {
+              const checkedCount = group.querySelectorAll('input[type="checkbox"]:checked').length;
+              if (checkedCount >= 3) {
+                  inputs.forEach(cb => { if (!cb.checked) cb.disabled = true; });
+              } else {
+                  inputs.forEach(cb => { cb.disabled = false; });
+              }
+          });
+      });
+  });
+
   document.getElementById('waitlistForm').addEventListener('submit', function(e){
     e.preventDefault();
     
+    // Helper to get checked values
+    const getChecked = (name) => Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
+    const getRadio = (name) => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; };
+
     const data = {
         name: document.getElementById('name').value,
         business: document.getElementById('business').value,
         whatsapp: document.getElementById('whatsapp').value,
-        platform: document.getElementById('platform').value,
-        order_volume: document.getElementById('order_volume').value,
-        sales_channels: document.getElementById('sales_channels').value,
-        delivery_method: document.getElementById('delivery_method').value,
-        ideal_software: document.getElementById('ideal_software').value
+        product_category: document.getElementById('product_category').value,
+        business_duration: getRadio('business_duration'),
+        order_volume: getRadio('order_volume'),
+        sales_channels: getChecked('sales_channels'),
+        current_tools: getRadio('current_tools'),
+        time_drains: getChecked('time_drains'),
+        frustrations: getChecked('frustrations'),
+        lost_money: getRadio('lost_money'),
+        lost_money_details: document.getElementById('lost_money_details').value,
+        desired_automation: document.getElementById('desired_automation').value,
+        worst_task: document.getElementById('worst_task').value,
+        two_hours_saved: document.getElementById('two_hours_saved').value,
+        interest_level: getRadio('interest_level'),
+        biggest_slowdown: document.getElementById('biggest_slowdown').value
     };
     
     fetch(window.location.href, { 

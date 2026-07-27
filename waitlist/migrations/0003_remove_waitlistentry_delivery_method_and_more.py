@@ -82,7 +82,11 @@ class Migration(migrations.Migration):
             name='worst_task',
             field=models.TextField(blank=True, null=True),
         ),
-        migrations.AlterField(
+        migrations.RemoveField(
+            model_name='waitlistentry',
+            name='sales_channels',
+        ),
+        migrations.AddField(
             model_name='waitlistentry',
             name='sales_channels',
             field=models.JSONField(blank=True, default=list, null=True),
